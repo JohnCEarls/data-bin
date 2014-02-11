@@ -26,7 +26,7 @@ def get_nodes(include_me=False):
     my_alias = get_my_alias()
     identity = boto.utils.get_instance_identity()
     conn = boto.connect_ec2(region=get_region( identity['document']['region']))
-    m = re.match(r'(?P<cluster>\w*-?)(master|node\d\d\d)', my_alias)
+    m = re.match(r'(?P<cluster>[\w-]*-?)(master|node\d\d\d)', my_alias)
     if m:
         mycluster = m.groupdict()['cluster']
         aliases = conn.get_all_tags(filters={'resource-type':'instance', 'key':'alias'})
