@@ -8,11 +8,11 @@ ec2 = boto.connect_ec2()
 success = False
 for address in ec2.get_all_addresses():
     try:
-        eip = boto.ec2.address.Address( ec2, public_ip=address)
-        res = eip.associate(instance)
+        res = address.associate(instance)
         if res:
             print "Associated with %s" % address
             break
-    except:
+    except Exception as e:
+        print e
         print "Unable to associate with %s" % address 
 
