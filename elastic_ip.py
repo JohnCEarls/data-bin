@@ -3,7 +3,7 @@ import boto
 import boto.utils
 import sys
 
-site_name = 'aurea-nebula-dev.adversary.us'
+site_name = 'aurea-nebula.adversary.us'
 instance = boto.utils.get_instance_identity()['document']['instanceId']
 def get_ip( site_name ):
     """
