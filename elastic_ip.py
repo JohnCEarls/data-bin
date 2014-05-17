@@ -1,12 +1,25 @@
 #!/usr/bin/env python
 import boto
 import boto.utils
+import sys
+
+site_name = sys.argv[1]
+def get_ip( site_name ):
+    r53 = boto.connect_route53()
+    zone = r53.get_zone('.'.join(site_name.split('.')[1:]) + '.')
+    record = zone.get_a(site_name).resource_records
+    if record is None or len(record) != 1:
+        print len(record)
+        raise Exception(
+                "Unable to find a unique route 53 record for [%s] [%r]" % (
+            site_name, record) )
+    return record 
+
 
 instance = boto.utils.get_instance_identity()['document']['instanceId']
-
 ec2 = boto.connect_ec2()
 success = False
-for address in ec2.get_all_addresses():
+for address in ec2.get_all_addresses(get_ip(site_name)):
     try:
         res = address.associate(instance)
         if res:
