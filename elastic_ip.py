@@ -32,5 +32,5 @@ def associate_ip( instance_id, site_name ):
         except Exception as e:
             print e
             print "Unable to associate with %s" % address 
-
+print "Attempting to associate %s with %s" % ( site_name, instance )
 associate_ip( instance, site_name)
